@@ -41,14 +41,39 @@ y2 = z1(3,:);
 y3 = z1(4,:);
 
 n = length(t);
+%% interpolacja splajnem
+pp1 = spline(t,y1);
+y1_fit = ppval(pp1,t);
+pp2 = spline(t,y2);
+y2_fit = ppval(pp2,t);
+pp3 = spline(t,y3);
+y3_fit = ppval(pp3,t);
 
 
+figure(1)
+subplot(3,1,1)
+plot(t,y1, 'r*',t,y1_fit, 'b')
+xlabel('Dni roku')
+ylabel('Temperatura')
+grid on;
+subplot(3,1,2)
+plot(t,y2, 'r*',t,y2_fit, 'b')
+xlabel('Dni roku')
+ylabel('Prędkość wiatru')
+grid on;
+subplot(3,1,3)
+plot(t,y3, 'r*',t,y3_fit, 'b')
+xlabel('Dni roku')
+ylabel('Pm10')
+grid on;
+%% Aproksymacja przedziałowa
 breaks = [1,11,21,31,41,51,61,71];
-
-
-figure; hold on;
+s_apro = 5; % stopień aproksymacji
+figure(2);
+subplot(3,1,1)
+hold on;
 plot(t,y1, 'r')
-title('Temperatura')
+ylabel('Temperatura')
 xlabel('Dzien roku')
 grid on;
 
@@ -57,15 +82,17 @@ for i = 1:length(breaks)-1
     xi = t(idx);
     yi = y1(idx);
 
-    p = polyfit(xi,yi, 8);
+    p = polyfit(xi,yi, s_apro);
     y_fit = polyval(p,xi);
 
     plot(xi, y_fit, 'b')
 end
+
 hold off;
-figure(2); hold on;
+subplot(3,1,2)
+hold on;
 plot(t,y2, 'r')
-title('Temperatura')
+ylabel('Prędkość wiatru')
 xlabel('Dzien roku')
 grid on;
 
@@ -74,15 +101,16 @@ for i = 1:length(breaks)-1
     xi = t(idx);
     y22 = y2(idx);
 
-    p2 = polyfit(xi,y22, 8);
+    p2 = polyfit(xi,y22, s_apro);
     y_fit2 = polyval(p2,xi);
 
     plot(xi, y_fit2, 'b')
 end
 hold off;
-figure(3); hold on;
+subplot(3,1,3)
+hold on;
 plot(t,y3, 'r')
-title('Temperatura')
+ylabel('Pm10')
 xlabel('Dzien roku')
 grid on;
 
@@ -91,45 +119,13 @@ for i = 1:length(breaks)-1
     xi = t(idx);
     y33 = y3(idx);
 
-    p3 = polyfit(xi,y33, 8);
+    p3 = polyfit(xi,y33, s_apro);
     y_fit3 = polyval(p3,xi);
 
     plot(xi, y_fit3, 'b')
 end
 hold off;
-% [w1,S1] = polyfit(t,y1,20);
-% a1 = polyval(w1,t);
-% [w2,S2] = polyfit(t,y2,20);
-% a2 = polyval(w2,t);
-% [w3,S3] = polyfit(t,y3,20);
-% a3 = polyval(w3,t);
-
-% figure(2)
-% subplot(3,1,1)
-% plot(t,y1, 'r',t,a1, 'b')
-% title('Temperatura')
-% xlabel('Dzien roku')
-% ylabel('Temperatura *C')
-% grid on
-% subplot(3,1,2)
-% plot(t,y2, 'b',t,a2,'r')
-% title('Predkosc wiatru')
-% xlabel('Dzien roku')
-% ylabel('m/s')
-% grid on
-% subplot(3,1,3)
-% plot(t,y3, 'r',t,a3,'b')
-% title('PM10')
-% xlabel('Dzien roku')
-% ylabel('???')
-% grid on;
-
-
-
-
-
-
-
+%%
 % E_y1 = sum(y1.^2);
 % E_y2 = sum(y2.^2);
 % E_y3 = sum(y3.^2);
