@@ -1,0 +1,19 @@
+clc;clear;
+m = 15; %kg
+k = 5000; %N/m
+c = 300; %Ns/m
+
+L = [ 1 ];
+M = [m c k];
+
+y = tf(L,M)
+
+
+figure(1)
+stepplot(y)
+grid on;
+
+figure(2)
+bode(L,M)
+
+figure(3)
