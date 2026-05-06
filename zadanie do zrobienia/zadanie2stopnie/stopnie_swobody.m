@@ -1,4 +1,5 @@
 clear; clc;
+%%
 global omega  FM A
 f = 10;
 m1 = 10;
@@ -53,18 +54,18 @@ D = [0; 0];
 %% Laplace    
 
 sys_ss = ss(A, B, C, D);
-y = tf(sys_ss);
+y = tf(sys_ss)
 
-figure(1)
-stepplot(y)
-grid on;
-
-figure(2)
-bode(sys_ss)
-
-figure(3)
-impulse(sys_ss)
-figure(4)
-nyquist(y)
-figure(5)
-nichols(y)
+% figure(1)
+% stepplot(y)
+% grid on;
+% 
+% figure(2)
+% bode(sys_ss)
+% 
+% figure(3)
+% impulse(sys_ss)
+% figure(4)
+% nyquist(y)
+% figure(5)
+% nichols(y)
